@@ -4,21 +4,28 @@ const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoute");
 require('dotenv').config();
 
+const cors = require("cors"); // Import the cors middleware
+
 
 // Create an Express application
 const app = express();
+
 
 // Set the port for the server to listen on
 const port = process.env.PORT || 4000;
 
 // Set the MongoDB URI for database connection
-const mongoURI = process.env.MONGODB_URI || "mongodb+srv://jonneldosadomain:admin123@cluster0.nnl816c.mongodb.net/receipt_hub?retryWrites=true&w=majority";
+const mongoURI = process.env.MONGODB_URI
 
 // Middleware for parsing JSON and handling URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("users", userRoutes)
+// Use the cors middleware
+app.use(cors());
+
+
+app.use("/users", userRoutes)
 
 // Enable CORS for all routes
 
